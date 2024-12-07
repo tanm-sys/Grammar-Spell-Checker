@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Grammar And Spell Checker</title>
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+            background: linear-gradient(135deg, #e0c3fc 0%, #8ec5fc 100%);
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            overflow: hidden;
+        }
+        .container {
+            background: rgba(255, 255, 255, 0.8);
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+            width: 90%;
+            max-width: 600px;
+            animation: fadeIn 1s ease-in-out;
+        }
+        h1 {
+            color: #333;
+            text-align: center;
+            margin-bottom: 30px;
+            font-size: 3em;
+            font-weight: 700;
+            animation: slideInDown 1s ease-in-out;
+        }
+        textarea {
+            width: 100%;
+            padding: 20px;
+            margin-bottom: 20px;
+            border: 2px solid #ddd;
+            border-radius: 10px;
+            resize: vertical;
+            font-size: 1.2em;
+            transition: border-color 0.3s, box-shadow 0.3s;
+            outline: none;
+        }
+        textarea:focus {
+            border-color: #6200ea;
+            box-shadow: 0 0 10px rgba(98, 0, 234, 0.3);
+        }
+        button {
+            background-color: #6200ea;
+            color: white;
+            padding: 15px 30px;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            font-size: 1.2em;
+            transition: background-color 0.3s, transform 0.2s;
+        }
+        button:hover {
+            background-color: #3700b3;
+            transform: scale(1.05);
+        }
+        form {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .result-section {
+            margin-top: 30px;
+        }
+        .result-section h2 {
+            color: #6200ea;
+            font-size: 2.5em;
+            margin-bottom: 15px;
+            text-align: center;
+        }
+        .result-section p, .result-section ul {
+            font-size: 1.2em;
+            color: #333;
+            line-height: 1.6;
+        }
+        .result-section ul {
+            padding-left: 20px;
+        }
+        .result-section ul li {
+            list-style-type: disc;
+            margin-bottom: 10px;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        @keyframes slideInDown {
+            from { transform: translateY(-100%); }
+            to { transform: translateY(0); }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Grammar And Spell Checker</h1>
+        
+        <form action="/correct" method="post">
+            <textarea name="text" rows="10" cols="30" placeholder="Type your text here"></textarea>
+            <button type="submit">Correct</button>
+        </form>
+
+        <div class="result-section">
+            {% if corrected_text %}
+                <h2>Corrected Text:</h2>
+                <p>{{corrected_text}}</p>
+            {% endif %}
+
+            {% if errors %}
+                <h2>Grammar Mistakes:</h2>
+                <ul>
+                    {% for error in errors %}
+                        <li>{{ error }}</li>
+                    {% endfor %}
+                </ul>
+            {% endif %}
+        </div>
+
+        <form action="/download" method="post" enctype="multipart/form-data">
+            <input type="file" name="file">
+            <button type="submit">Upload File</button>
+        </form>
+    </div>
+</body>
+</html>
